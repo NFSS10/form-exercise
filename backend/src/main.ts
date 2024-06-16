@@ -1,5 +1,6 @@
 import "dotenv/config";
 import express, { Express, Request, Response, NextFunction } from "express";
+import mongoose from "mongoose";
 
 import { routes } from "@/routes";
 import { NotFoundError, ValidationError } from "@/utils/errors";
@@ -14,6 +15,13 @@ const buildExpressApp = (): Express => {
     app.use(onGlobalErrorCatch);
 
     return app;
+};
+
+const initDatabase = async (): Promise<void> => {
+    const uri = process.env.MONGODB_URI ?? null;
+    if (!uri) throw new Error("MongoDB URI not found");
+
+    await mongoose.connect(uri);
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -37,6 +45,8 @@ const onGlobalErrorCatch = (error: Error, req: Request, res: Response, next: Nex
 };
 
 (async (): Promise<void> => {
+    await initDatabase();
+
     const app = buildExpressApp();
 
     const port = process.env.PORT || 5000;
