@@ -61,11 +61,6 @@ export default defineComponent({
             selectedFeedback: null as null | Feedback
         };
     },
-    watch: {
-        selectedFeedback(value: Feedback) {
-            console.log("changed", value.id);
-        }
-    },
     async mounted() {
         await this.loadFeedbackData();
     },
