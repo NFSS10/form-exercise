@@ -1,6 +1,8 @@
 <template>
     <div class="feedback">
         <p>Feedback</p>
+        <icon icon="bug" />
+        <icon icon="suggestion" />
     </div>
 </template>
 
