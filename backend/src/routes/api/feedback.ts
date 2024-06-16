@@ -47,6 +47,7 @@ router.get("/", async (req, res) => {
         id: entry.id,
         name: entry.name,
         email: entry.email,
+        title: entry.title,
         feedbackType: entry.feedbackType,
         message: entry.message,
         createdAt: entry.createdAt.getTime()
@@ -63,6 +64,7 @@ router.post("/", async (req, res) => {
         name: z.string().trim().min(1),
         email: z.string().trim().email(),
         feedbackType: z.enum(feedbackTypeValues),
+        title: z.string().trim().min(1),
         message: z.string().trim().min(1)
     });
 
@@ -80,6 +82,7 @@ router.post("/", async (req, res) => {
         name: newFeedback.name,
         email: newFeedback.email,
         feedbackType: newFeedback.feedbackType,
+        title: newFeedback.title,
         message: newFeedback.message,
         createdAt: newFeedback.createdAt.getTime()
     };

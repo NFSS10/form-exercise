@@ -3,6 +3,7 @@ type Feedback = {
     name: string;
     email: string;
     feedbackType: FeedbackType;
+    title: string;
     message: string;
     createdAt: number;
 }
