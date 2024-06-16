@@ -67,7 +67,6 @@ export default defineComponent({
     },
     watch: {
         async filter() {
-            console.log("aaaaaaaa", this.filter);
             await this.loadFeedbackData();
         },
         async sort() {
@@ -104,7 +103,6 @@ export default defineComponent({
             await response.json();
 
             alert("Feedback sent");
-            this.selectedSection = "all-feedback";
         },
         async loadFeedbackData() {
             const data = await this.fetchFeedbacks(this.currentPage, { filter: this.filter, sort: this.sort });
@@ -120,6 +118,8 @@ export default defineComponent({
         },
         async onSendFeedback(data: FeedbackCreatePayload) {
             await this.createFeedback(data);
+            await this.loadFeedbackData();
+            this.selectedSection = "all-feedback";
         }
     }
 });
