@@ -32,7 +32,7 @@
                 />
             </div>
             <div class="flex items-center justify-center h-16 border-t border-b border-slate-200" v-if="totalPages > 1">
-                <pagination :total="totalPages" :selected="currentPage" />
+                <pagination :total="totalPages" v-model:selected="currentPageData" />
             </div>
         </div>
     </div>
@@ -79,16 +79,11 @@ export default defineComponent({
         return {
             filterData: this.filter,
             sortData: this.sort,
-            selectedFeedback: this.selected as null | Feedback
+            selectedFeedback: this.selected as null | Feedback,
+            currentPageData: this.currentPage
         };
     },
     watch: {
-        selected(value: Feedback) {
-            this.selectedFeedback = value;
-        },
-        selectedFeedback(value: Feedback) {
-            this.$emit("update:selected", value);
-        },
         filter(value: string) {
             this.filterData = value;
         },
@@ -100,6 +95,18 @@ export default defineComponent({
         },
         sortData(value: string) {
             this.$emit("update:sort", value);
+        },
+        selected(value: Feedback) {
+            this.selectedFeedback = value;
+        },
+        selectedFeedback(value: Feedback) {
+            this.$emit("update:selected", value);
+        },
+        currentPage(value: number) {
+            this.currentPageData = value;
+        },
+        currentPageData(value: number) {
+            this.$emit("update:currentPage", value);
         }
     },
     methods: {

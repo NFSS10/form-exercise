@@ -19,11 +19,11 @@
                 <feedback-list
                     class="w-[414px] h-full overflow-auto"
                     :items="feedbacks"
-                    :currentPage="currentPage"
                     :totalPages="totalPages"
                     v-model:filter="filter"
                     v-model:sort="sort"
                     v-model:selected="selectedFeedback"
+                    v-model:currentPage="currentPage"
                 />
             </div>
             <div class="flex flex-grow bg-white pt-[75px] ml-[414px]">
@@ -66,11 +66,14 @@ export default defineComponent({
         };
     },
     watch: {
-        async filter(value: string) {
+        async filter() {
             console.log("aaaaaaaa", this.filter);
             await this.loadFeedbackData();
         },
-        async sort(value: string) {
+        async sort() {
+            await this.loadFeedbackData();
+        },
+        async currentPage() {
             await this.loadFeedbackData();
         }
     },
@@ -78,9 +81,9 @@ export default defineComponent({
         await this.loadFeedbackData();
     },
     methods: {
-        async fetchFeedbacks(page=1, { filter = "", sort = "" } = {}) {
+        async fetchFeedbacks(page = 1, { filter = "", sort = "" } = {}) {
             let url = `/api/feedback?page=${page}`;
-            
+
             let query = "";
             if (filter) query += `&type=${filter}`;
             if (sort) query += `&sort=${sort}`;
