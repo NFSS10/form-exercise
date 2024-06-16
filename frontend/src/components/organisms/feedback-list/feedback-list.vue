@@ -1,10 +1,10 @@
 <template>
     <div class="feedback-list bg-slate-50 flex flex-col">
         <div>TODO filter</div>
-        <div class="flex flex-col justify-between flex-grow">
+        <div class="flex flex-col justify-between flex-grow border border-slate-200">
             <div>
                 <feedback-item
-                    class="cursor-pointer select-none"
+                    class="cursor-pointer select-none mb-2"
                     v-for="item in items"
                     :key="item.id"
                     :type="item.feedbackType"
@@ -15,7 +15,7 @@
                     @click="selectedFeedback = item"
                 />
             </div>
-            <div class="flex items-center justify-center" v-if="totalPages > 1">
+            <div class="flex items-center justify-center h-16 border-t border-b border-slate-200" v-if="totalPages > 1">
                 <pagination :total="totalPages" :selected="currentPage" />
             </div>
         </div>

@@ -1,7 +1,7 @@
 <template>
     <div class="feedback-content">
         <div>{{ postedAt }}</div>
-        <div>
+        <div class="flex">
             <icon :icon="icon" />
             <div>
                 <div class="flex items-center font-medium text-base">{{ title }}</div>
@@ -9,7 +9,7 @@
                     <div>{{ name }}</div>
                     <div>{{ email }}</div>
                 </div>
-                <div>{{ message }}</div>
+                <div class="whitespace-pre-line">{{ message }}</div>
             </div>
         </div>
     </div>

@@ -1,6 +1,6 @@
 <template>
-    <div class="feedback flex flex-col">
-        <div class="flex items-center justify-between pt-2.5 pl-4 pb-3.5 pr-10 border-b border-slate-200 bg-slate-50">
+    <div class="feedback flex flex-col bg-slate-50">
+        <div class="flex items-center justify-between pt-2.5 pl-4 pb-3.5 pr-10 border-b border-slate-200">
             <img
                 class="w-12 h-12 sm:w-[70px] sm:h-[70px]"
                 src="/images/feedback-logo.png"
@@ -14,23 +14,27 @@
                 <btn class="ml-5" variant="secondary" @click="onNewFeedbackClick">New feedback</btn>
             </div>
         </div>
-        <section v-if="selectedSection == 'all-feedback'" class="flex flex-grow">
-            <feedback-list
-                :items="feedbacks"
-                :currentPage="currentPage"
-                :totalPages="totalPages"
-                class="w-[414px]"
-                v-model:selected="selectedFeedback"
-            />
-            <feedback-content
-                class="flex-grow"
-                v-if="selectedFeedback"
-                :type="selectedFeedback.feedbackType"
-                :title="'TODFO selectedFeedback.title'"
-                :name="selectedFeedback.name"
-                :email="selectedFeedback.email"
-                :timestamp="selectedFeedback.createdAt"
-            />
+        <section v-if="selectedSection == 'all-feedback'" class="flex flex-grow relative">
+            <div class="absolute h-full w-full;">
+                <feedback-list
+                    class="w-[414px] h-full overflow-auto"
+                    :items="feedbacks"
+                    :currentPage="currentPage"
+                    :totalPages="totalPages"
+                    v-model:selected="selectedFeedback"
+                />
+            </div>
+            <div class="flex flex-grow bg-white pt-[75px]">
+                <feedback-content
+                    class="mx-auto min-w-[716px]"
+                    v-if="selectedFeedback"
+                    :type="selectedFeedback.feedbackType"
+                    :title="'TODFO selectedFeedback.title'"
+                    :name="selectedFeedback.name"
+                    :email="selectedFeedback.email"
+                    :timestamp="selectedFeedback.createdAt"
+                />
+            </div>
         </section>
         <section v-else-if="selectedSection == 'new-feedback'">
             <form-new-feedback />
