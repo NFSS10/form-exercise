@@ -1,15 +1,15 @@
 <template>
     <div class="feedback-content">
-        <div>{{ postedAt }}</div>
-        <div class="flex">
-            <icon :icon="icon" />
-            <div>
-                <div class="flex items-center font-medium text-base">{{ title }}</div>
-                <div class="flex justify-between text-xs mt-1.5 text-slate-500">
+        <div class="text-xs text-slate-500 ml-[34px]">{{ postedAt }}</div>
+        <div class="flex mt-[6px]">
+            <icon :icon="icon" class="flex h-8 items-center" />
+            <div class="ml-2.5">
+                <div class="flex items-center font-medium text-2xl">{{ title }}</div>
+                <div class="flex text-xs mt-2 text-slate-500">
                     <div>{{ name }}</div>
                     <div>{{ email }}</div>
                 </div>
-                <div class="whitespace-pre-line">{{ message }}</div>
+                <div class="whitespace-pre-line mt-6">{{ message }}</div>
             </div>
         </div>
     </div>
