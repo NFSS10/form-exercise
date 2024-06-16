@@ -29,11 +29,12 @@ router.get("/", async (req, res) => {
         throw new ValidationError("Invalid query", fieldErrors);
     }
 
-    const { page, pageSize, name, sort } = validation.data;
+    const { page, pageSize, name, type, sort } = validation.data;
 
     // eslint-disable-next-line  @typescript-eslint/no-explicit-any
     const filter: any = {};
     if (name) filter.name = { $regex: name, $options: "i" };
+    else if (type) filter.feedbackType = { $eq: type }
 
     const totalFeedbackEntries = await FeedbackModel.countDocuments(filter);
     const totalPages = Math.ceil(totalFeedbackEntries / pageSize);

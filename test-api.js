@@ -37,6 +37,14 @@ const getFeedbackFilteredByName = async () => {
     console.log("\ngetFeedbackFilteredByName", name, data);
 }
 
+const getFeedbackFilteredByType = async () => {
+    const type = "bug";
+
+    const response = await fetch(`${url}/api/feedback?type=${type}`)
+    const data = await response.json();
+    console.log("\ngetFeedbackFilteredByType", type, data);
+}
+
 const getFeedbackPage2 = async () => {
     const response = await fetch(`${url}/api/feedback?page=2`);
     const data = await response.json();
@@ -67,6 +75,7 @@ const getFeedbackSortedByDate = async () => {
     await createBadFeedback();
 
     await getFeedbackFilteredByName();
+    await getFeedbackFilteredByType();
     await getFeedbackPage2();
     await getFeedbackPageSmallerPageSize();
     await getFeedbackSortedByName();
