@@ -1,0 +1,32 @@
+{
+    "compilerOptions": {
+        "module": "es2022",
+        "target": "es2020",
+        "moduleResolution": "node",
+        "types": ["node", "vite/client"],
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["./src/*"],
+            "@shared/*": ["../shared/*"]
+        },
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "removeComments": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true,
+        "strictPropertyInitialization": false,
+        "noUncheckedIndexedAccess": true,
+        "noUnusedLocals": true,
+        "noFallthroughCasesInSwitch": true,
+
+        // Required in Vue projects
+        "skipLibCheck": true,
+        "jsx": "preserve",
+
+        // Required in Vite
+        // Enforce using `import type` instead of `import` for types
+        "verbatimModuleSyntax": true
+    },
+    "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+    "exclude": ["node_modules"]
+}
