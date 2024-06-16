@@ -15,7 +15,7 @@
             </div>
         </div>
         <section v-if="selectedSection == 'all-feedback'" class="flex flex-grow relative">
-            <div class="absolute h-full w-full;">
+            <div class="absolute h-full w-full">
                 <feedback-list
                     class="w-[414px] h-full overflow-auto"
                     :items="feedbacks"
@@ -24,7 +24,7 @@
                     v-model:selected="selectedFeedback"
                 />
             </div>
-            <div class="flex flex-grow bg-white pt-[75px]">
+            <div class="flex flex-grow bg-white pt-[75px] ml-[414px]">
                 <feedback-content
                     class="mx-auto min-w-[716px]"
                     v-if="selectedFeedback"
