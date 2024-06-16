@@ -2,13 +2,6 @@
     <div class="icon" ref="icon" v-html="svgFile" />
 </template>
 
-<style scoped>
-.icon {
-    font-size: 0px;
-    display: inline-block;
-}
-</style>
-
 <script lang="ts">
 import { defineComponent } from "vue";
 
