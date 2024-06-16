@@ -4,6 +4,9 @@
             <feedback-item type="bug" title="Feedback title" name="John Doe" :timestamp="Date.now() - 1000 * 60 * 30" />
             <feedback-item type="bug" title="Feedback title" name="John Doe" :timestamp="Date.now()" state="selected" />
         </div>
+        <hr />
+        <btn>My button</btn>
+        <div class="w-96">
     </div>
 </template>
 
