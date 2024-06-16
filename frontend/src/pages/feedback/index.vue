@@ -21,6 +21,8 @@
                     :items="feedbacks"
                     :currentPage="currentPage"
                     :totalPages="totalPages"
+                    v-model:filter="filter"
+                    v-model:sort="sort"
                     v-model:selected="selectedFeedback"
                 />
             </div>
@@ -54,6 +56,8 @@ export default defineComponent({
     name: "feedback",
     data() {
         return {
+            filter: "",
+            sort: "",
             feedbacks: [],
             totalPages: 0,
             currentPage: 1,
@@ -61,12 +65,28 @@ export default defineComponent({
             selectedFeedback: null as null | Feedback
         };
     },
+    watch: {
+        async filter(value: string) {
+            console.log("aaaaaaaa", this.filter);
+            await this.loadFeedbackData();
+        },
+        async sort(value: string) {
+            await this.loadFeedbackData();
+        }
+    },
     async mounted() {
         await this.loadFeedbackData();
     },
     methods: {
-        async fetchFeedbacks() {
-            const response = await fetch("/api/feedback");
+        async fetchFeedbacks(page=1, { filter = "", sort = "" } = {}) {
+            let url = `/api/feedback?page=${page}`;
+            
+            let query = "";
+            if (filter) query += `&type=${filter}`;
+            if (sort) query += `&sort=${sort}`;
+            if (query) url += query;
+
+            const response = await fetch(url);
             const data = await response.json();
             return data;
         },
@@ -84,7 +104,7 @@ export default defineComponent({
             this.selectedSection = "all-feedback";
         },
         async loadFeedbackData() {
-            const data = await this.fetchFeedbacks();
+            const data = await this.fetchFeedbacks(this.currentPage, { filter: this.filter, sort: this.sort });
             this.feedbacks = data.entries;
             this.totalPages = data.totalPages;
             this.currentPage = data.currentPage;

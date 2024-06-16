@@ -1,6 +1,22 @@
 <template>
     <div class="feedback-list bg-slate-50 flex flex-col">
-        <div>TODO filter</div>
+        <div class="flex items-center justify-between p-1 border border-slate-200 pt-3 px-4 pb-4">
+            <div class="flex items-center">
+                <label for="filter" class="mr-3 text-xs font-medium">Filter</label>
+                <select id="filter" v-model="filterData">
+                    <option value="">No filter</option>
+                    <option v-for="value in typeValues" :key="value" :value="value">{{ capitalize(value) }}</option>
+                </select>
+            </div>
+            <div class="flex items-center">
+                <label for="sort" class="mr-3 text-xs font-medium">Sort</label>
+                <select id="sort" v-model="sortData">
+                    <option value="">Unsorted</option>
+                    <option value="createdAt">Date</option>
+                    <option value="name">Name</option>
+                </select>
+            </div>
+        </div>
         <div class="flex flex-col justify-between flex-grow border border-slate-200">
             <div>
                 <feedback-item
@@ -25,11 +41,19 @@
 <script lang="ts">
 import { defineComponent, type PropType } from "vue";
 
-import type { Feedback } from "@shared/types/feedback";
+import { feedbackTypeValues, type Feedback } from "@shared/types/feedback";
 
 export default defineComponent({
     name: "feedback-list",
     props: {
+        filter: {
+            type: String,
+            default: ""
+        },
+        sort: {
+            type: String,
+            default: ""
+        },
         items: {
             type: Array as PropType<Feedback[]>,
             default: () => []
@@ -45,10 +69,16 @@ export default defineComponent({
         currentPage: {
             type: Number,
             default: 1
+        },
+        typeValues: {
+            type: Array as PropType<string[]>,
+            default: feedbackTypeValues
         }
     },
     data() {
         return {
+            filterData: this.filter,
+            sortData: this.sort,
             selectedFeedback: this.selected as null | Feedback
         };
     },
@@ -58,12 +88,27 @@ export default defineComponent({
         },
         selectedFeedback(value: Feedback) {
             this.$emit("update:selected", value);
+        },
+        filter(value: string) {
+            this.filterData = value;
+        },
+        filterData(value: string) {
+            this.$emit("update:filter", value);
+        },
+        sort(value: string) {
+            this.sortData = value;
+        },
+        sortData(value: string) {
+            this.$emit("update:sort", value);
         }
     },
     methods: {
         itemState(item: Feedback) {
             if (!this.selectedFeedback) return "default";
             return this.selectedFeedback.id === item.id ? "selected" : "default";
+        },
+        capitalize(value: string) {
+            return value.charAt(0).toUpperCase() + value.slice(1);
         }
     }
 });
