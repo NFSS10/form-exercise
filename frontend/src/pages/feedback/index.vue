@@ -1,12 +1,11 @@
 <template>
     <div class="feedback">
-        <p>Feedback</p>
-        <icon icon="bug" />
-        <icon icon="suggestion" />
+        <div class="w-96">
+            <feedback-item type="bug" title="Feedback title" name="John Doe" :timestamp="Date.now() - 1000 * 60 * 30" />
+            <feedback-item type="bug" title="Feedback title" name="John Doe" :timestamp="Date.now()" state="selected" />
+        </div>
     </div>
 </template>
-
-<style scoped></style>
 
 <script lang="ts">
 import { defineComponent } from "vue";
