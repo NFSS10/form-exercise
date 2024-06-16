@@ -4,7 +4,7 @@
         <div class="flex flex-col justify-between flex-grow">
             <div>
                 <feedback-item
-                    class="cursor-pointer"
+                    class="cursor-pointer select-none"
                     v-for="item in items"
                     :key="item.id"
                     :type="item.feedbackType"
