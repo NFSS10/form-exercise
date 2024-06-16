@@ -3,6 +3,7 @@ type Feedback = {
     name: string;
     email: string;
     feedbackType: FeedbackType;
+    title: string;
     message: string;
     createdAt: number;
 }
@@ -10,5 +11,13 @@ type Feedback = {
 const feedbackTypeValues = ["bug", "suggestion"] as const;
 type FeedbackType = typeof feedbackTypeValues[number];
 
-export type { FeedbackType, Feedback };
+type FeedbackCreatePayload = {
+    name: string;
+    email: string;
+    feedbackType: FeedbackType;
+    title: string;
+    message: string;
+}
+
+export type { FeedbackType, Feedback, FeedbackCreatePayload };
 export { feedbackTypeValues };
