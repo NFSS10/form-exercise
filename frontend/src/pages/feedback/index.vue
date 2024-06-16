@@ -1,5 +1,5 @@
 <template>
-    <div class="feedback">
+    <div class="feedback flex flex-col">
         <div class="flex items-center justify-between pt-2.5 pl-4 pb-3.5 pr-10 border-b border-slate-200 bg-slate-50">
             <img
                 class="w-12 h-12 sm:w-[70px] sm:h-[70px]"
@@ -14,9 +14,9 @@
                 <btn class="ml-5" variant="secondary" @click="onNewFeedbackClick">New feedback</btn>
             </div>
         </div>
-        <section v-if="sectionSelected == 'all-feedback'">
-            <feedback-list />
-            <feedback-content />
+        <section v-if="sectionSelected == 'all-feedback'" class="flex flex-grow">
+            <feedback-list :items="feedbacks" :currentPage="currentPage" :totalPages="totalPages" class="w-[414px]" />
+            <feedback-content class="flex-grow" />
         </section>
         <section v-else-if="sectionSelected == 'new-feedback'">
             <form-new-feedback />
@@ -31,10 +31,25 @@ export default defineComponent({
     name: "feedback",
     data() {
         return {
+            feedbacks: [],
+            totalPages: 0,
+            currentPage: 1,
             sectionSelected: "all-feedback"
         };
     },
+    async mounted() {
+        const data = await this.fetchFeedbacks();
+        this.feedbacks = data.entries;
+        this.totalPages = 2; // data.totalPages;
+        this.currentPage = data.currentPage;
+    },
     methods: {
+        async fetchFeedbacks() {
+            const response = await fetch("/api/feedback");
+            const data = await response.json();
+            console.log(data);
+            return data;
+        },
         onAllFeedbackClick() {
             this.sectionSelected = "all-feedback";
         },
