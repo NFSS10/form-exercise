@@ -8,7 +8,7 @@
                     v-for="item in items"
                     :key="item.id"
                     :type="item.feedbackType"
-                    :title="'TODO title'"
+                    :title="item.title"
                     :name="item.name"
                     :timestamp="item.createdAt"
                     :state="itemState(item)"

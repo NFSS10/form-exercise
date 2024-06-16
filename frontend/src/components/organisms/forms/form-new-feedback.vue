@@ -40,7 +40,7 @@
 <script lang="ts">
 import { defineComponent, type PropType } from "vue";
 
-import { feedbackTypeValues } from "@shared/types/feedback";
+import { feedbackTypeValues, type FeedbackCreatePayload, type FeedbackType } from "@shared/types/feedback";
 
 export default defineComponent({
     name: "form-new-feedback",
@@ -95,18 +95,23 @@ export default defineComponent({
             return value.charAt(0).toUpperCase() + value.slice(1);
         },
         onDiscardClick() {
-            this.$emit("discard");
+            this.name = "";
+            this.email = "";
+            this.type = "";
+            this.title = "";
+            this.message = "";
         },
         onSendClick() {
             if (!this.validate()) return;
 
-            this.$emit("send", {
+            const data: FeedbackCreatePayload = {
                 name: this.name,
                 email: this.email,
-                type: this.type,
+                feedbackType: this.type as FeedbackType,
                 title: this.title,
                 message: this.message
-            });
+            };
+            this.$emit("send", data);
         }
     }
 });

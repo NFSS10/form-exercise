@@ -29,16 +29,17 @@
                     class="mx-auto min-w-[716px]"
                     v-if="selectedFeedback"
                     :type="selectedFeedback.feedbackType"
-                    :title="'TODFO selectedFeedback.title'"
+                    :title="selectedFeedback.title"
                     :name="selectedFeedback.name"
                     :email="selectedFeedback.email"
                     :timestamp="selectedFeedback.createdAt"
+                    :message="selectedFeedback.message"
                 />
             </div>
         </section>
         <section v-else-if="selectedSection == 'new-feedback'">
             <card class="mt-16 mx-auto max-w-[773px]" :title="'Add new feedback'">
-                <form-new-feedback />
+                <form-new-feedback @send="onSendFeedback" />
             </card>
         </section>
     </div>
@@ -47,7 +48,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 
-import type { Feedback } from "@shared/types/feedback";
+import type { Feedback, FeedbackCreatePayload } from "@shared/types/feedback";
 
 export default defineComponent({
     name: "feedback",
@@ -66,23 +67,41 @@ export default defineComponent({
         }
     },
     async mounted() {
-        const data = await this.fetchFeedbacks();
-        this.feedbacks = data.entries;
-        this.totalPages = 2; // data.totalPages;
-        this.currentPage = data.currentPage;
+        await this.loadFeedbackData();
     },
     methods: {
         async fetchFeedbacks() {
             const response = await fetch("/api/feedback");
             const data = await response.json();
-            console.log(data);
             return data;
+        },
+        async createFeedback(data: FeedbackCreatePayload) {
+            const response = await fetch("/api/feedback", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            });
+            await response.json();
+
+            alert("Feedback sent");
+            this.selectedSection = "all-feedback";
+        },
+        async loadFeedbackData() {
+            const data = await this.fetchFeedbacks();
+            this.feedbacks = data.entries;
+            this.totalPages = data.totalPages;
+            this.currentPage = data.currentPage;
         },
         onAllFeedbackClick() {
             this.selectedSection = "all-feedback";
         },
         onNewFeedbackClick() {
             this.selectedSection = "new-feedback";
+        },
+        async onSendFeedback(data: FeedbackCreatePayload) {
+            await this.createFeedback(data);
         }
     }
 });

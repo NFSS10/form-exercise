@@ -5,10 +5,7 @@
             <icon :icon="icon" class="flex h-8 items-center" />
             <div class="ml-2.5">
                 <div class="flex items-center font-medium text-2xl">{{ title }}</div>
-                <div class="flex text-xs mt-2 text-slate-500">
-                    <div>{{ name }}</div>
-                    <div>{{ email }}</div>
-                </div>
+                <div class="flex text-xs mt-2 text-slate-500">{{ name }} ({{ email }})</div>
                 <div class="whitespace-pre-line mt-6">{{ message }}</div>
             </div>
         </div>
@@ -47,7 +44,7 @@ export default defineComponent({
         },
         message: {
             type: String,
-            default: "Hi Team,\n hello and stuff"
+            required: true
         }
     },
     computed: {
