@@ -1,5 +1,5 @@
 <template>
-    <div class="feedback-list bg-slate-50 flex flex-col">
+    <div class="feedback-list bg-slate-50 flex flex-col relative">
         <div class="flex items-center justify-between p-1 border border-slate-200 pt-3 px-4 pb-4">
             <div class="flex items-center">
                 <label for="filter" class="mr-3 text-xs font-medium">Filter</label>
@@ -17,7 +17,7 @@
                 </select>
             </div>
         </div>
-        <div class="flex flex-col justify-between flex-grow border border-slate-200">
+        <div class="flex flex-col justify-between flex-grow border border-slate-200 overflow-y-scroll">
             <div>
                 <feedback-item
                     class="cursor-pointer select-none mb-2"
@@ -31,9 +31,12 @@
                     @click="selectedFeedback = item"
                 />
             </div>
-            <div class="flex items-center justify-center h-16 border-t border-b border-slate-200" v-if="totalPages > 1">
-                <pagination :total="totalPages" v-model:selected="currentPageData" />
-            </div>
+        </div>
+        <div
+            class="flex items-center justify-center h-16 border-t border-b border-slate-200 absolute bottom-0 bg-slate-50 w-full"
+            v-if="totalPages > 1"
+        >
+            <pagination :total="totalPages" v-model:selected="currentPageData" />
         </div>
     </div>
 </template>

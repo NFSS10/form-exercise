@@ -17,7 +17,7 @@
         <section v-if="selectedSection == 'all-feedback'" class="flex flex-grow relative">
             <div class="absolute h-full w-full">
                 <feedback-list
-                    class="w-[414px] h-full overflow-auto"
+                    class="w-[414px] h-full"
                     :items="feedbacks"
                     :totalPages="totalPages"
                     v-model:filter="filter"
