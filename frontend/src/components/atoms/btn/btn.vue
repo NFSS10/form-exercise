@@ -4,8 +4,6 @@
     </button>
 </template>
 
-<style scoped></style>
-
 <script lang="ts">
 import { defineComponent, type PropType } from "vue";
 
@@ -36,7 +34,7 @@ export default defineComponent({
     },
     computed: {
         variantClasses() {
-            const base = "btn w-auto box-border cursor-pointer text-sm font-bold py-2 px-4 rounded-sm";
+            const base = "btn box-border cursor-pointer text-sm font-bold py-2 px-4 rounded-sm";
             const transition = "transition-colors duration-100 ease-out";
             const color = colorStyles[this.variant];
             const hover = hoverStyles[this.variant];

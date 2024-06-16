@@ -7,6 +7,14 @@
         <hr />
         <btn>My button</btn>
         <div class="w-96">
+            <pagination :selected="3" :total="10" />
+        </div>
+        <div class="w-96">
+            <pagination :selected="1" :total="10" />
+        </div>
+        <div class="w-96">
+            <pagination :selected="10" :total="10" />
+        </div>
     </div>
 </template>
 
