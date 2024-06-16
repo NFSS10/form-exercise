@@ -4,6 +4,7 @@
         <div class="flex flex-col justify-between flex-grow">
             <div>
                 <feedback-item
+                    class="cursor-pointer"
                     v-for="item in items"
                     :key="item.id"
                     :type="item.feedbackType"
@@ -11,6 +12,7 @@
                     :name="item.name"
                     :timestamp="item.createdAt"
                     :state="itemState(item)"
+                    @click="selectedFeedback = item"
                 />
             </div>
             <div class="flex items-center justify-center" v-if="totalPages > 1">
@@ -45,10 +47,23 @@ export default defineComponent({
             default: 1
         }
     },
+    data() {
+        return {
+            selectedFeedback: this.selected as null | Feedback
+        };
+    },
+    watch: {
+        selected(value: Feedback) {
+            this.selectedFeedback = value;
+        },
+        selectedFeedback(value: Feedback) {
+            this.$emit("update:selected", value);
+        }
+    },
     methods: {
         itemState(item: Feedback) {
-            if (!this.selected) return "default";
-            return this.selected.id === item.id ? "selected" : "default";
+            if (!this.selectedFeedback) return "default";
+            return this.selectedFeedback.id === item.id ? "selected" : "default";
         }
     }
 });

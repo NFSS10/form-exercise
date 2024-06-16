@@ -14,11 +14,25 @@
                 <btn class="ml-5" variant="secondary" @click="onNewFeedbackClick">New feedback</btn>
             </div>
         </div>
-        <section v-if="sectionSelected == 'all-feedback'" class="flex flex-grow">
-            <feedback-list :items="feedbacks" :currentPage="currentPage" :totalPages="totalPages" class="w-[414px]" />
-            <feedback-content class="flex-grow" />
+        <section v-if="selectedSection == 'all-feedback'" class="flex flex-grow">
+            <feedback-list
+                :items="feedbacks"
+                :currentPage="currentPage"
+                :totalPages="totalPages"
+                class="w-[414px]"
+                v-model:selected="selectedFeedback"
+            />
+            <feedback-content
+                class="flex-grow"
+                v-if="selectedFeedback"
+                :type="selectedFeedback.feedbackType"
+                :title="'TODFO selectedFeedback.title'"
+                :name="selectedFeedback.name"
+                :email="selectedFeedback.email"
+                :timestamp="selectedFeedback.createdAt"
+            />
         </section>
-        <section v-else-if="sectionSelected == 'new-feedback'">
+        <section v-else-if="selectedSection == 'new-feedback'">
             <form-new-feedback />
         </section>
     </div>
@@ -27,6 +41,8 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 
+import type { Feedback } from "@shared/types/feedback";
+
 export default defineComponent({
     name: "feedback",
     data() {
@@ -34,8 +50,14 @@ export default defineComponent({
             feedbacks: [],
             totalPages: 0,
             currentPage: 1,
-            sectionSelected: "all-feedback"
+            selectedSection: "all-feedback",
+            selectedFeedback: null as null | Feedback
         };
+    },
+    watch: {
+        selectedFeedback(value: Feedback) {
+            console.log("changed", value.id);
+        }
     },
     async mounted() {
         const data = await this.fetchFeedbacks();
@@ -51,10 +73,10 @@ export default defineComponent({
             return data;
         },
         onAllFeedbackClick() {
-            this.sectionSelected = "all-feedback";
+            this.selectedSection = "all-feedback";
         },
         onNewFeedbackClick() {
-            this.sectionSelected = "new-feedback";
+            this.selectedSection = "new-feedback";
         }
     }
 });

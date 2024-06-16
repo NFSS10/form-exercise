@@ -15,11 +15,12 @@
 import { defineComponent, type PropType } from "vue";
 
 import type { FeedbackType } from "@shared/types/feedback";
-import { feedbackTypeValues } from "@shared/types/feedback";
+import { feedbackInfoMixin } from "@/mixins/feedback-info";
 import type { FeedbackItemState } from "./types";
 
 export default defineComponent({
     name: "feedback-item",
+    mixins: [feedbackInfoMixin],
     props: {
         type: {
             type: String as PropType<FeedbackType>,
@@ -49,22 +50,10 @@ export default defineComponent({
             };
         },
         icon() {
-            if (!feedbackTypeValues.includes(this.type as FeedbackType))
-                throw new Error(`Invalid feedback type: ${this.type}`);
-
-            return this.type === "bug" ? "bug" : "suggestion";
+            return this.feedbackIcon(this.type);
         },
         postedAt() {
-            const timestamp = this.timestamp;
-            const now = Date.now();
-            const diffInMilliseconds = now - new Date(timestamp).getTime();
-            const diffInMinutes = Math.floor(diffInMilliseconds / 60000);
-            const diffInHours = Math.floor(diffInMinutes / 60);
-            const diffInDays = Math.floor(diffInHours / 24);
-
-            if (diffInMinutes < 60) return `${diffInMinutes}min ago`;
-            else if (diffInHours < 24) return `${diffInHours}hrs ago`;
-            else return `${diffInDays} days ago`;
+            return this.postedAtText(this.timestamp);
         }
     }
 });
