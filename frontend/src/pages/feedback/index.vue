@@ -37,7 +37,9 @@
             </div>
         </section>
         <section v-else-if="selectedSection == 'new-feedback'">
-            <form-new-feedback />
+            <card class="mt-16 mx-auto max-w-[773px]" :title="'Add new feedback'">
+                <form-new-feedback />
+            </card>
         </section>
     </div>
 </template>
