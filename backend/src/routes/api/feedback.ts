@@ -11,7 +11,7 @@ const router = Router();
 router.get("/", async (req, res) => {
     const ValidationSchema = z.object({
         page: z.number().int().positive().default(1),
-        pageSize: z.number().int().positive().max(100).default(10),
+        pageSize: z.number().int().positive().max(100).default(20),
         name: z.string().optional(),
         type: z.enum(feedbackTypeValues).optional(),
         sort: z.enum(["name", "createdAt"]).default("createdAt")
